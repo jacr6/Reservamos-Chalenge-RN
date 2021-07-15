@@ -1,47 +1,42 @@
 const encodeObject = params => {
-    let query = [];
-    for (let key in params) {
-      let val = encodeURIComponent(key) + "=" + encodeURIComponent(params[key]);
-      query.push(val);
-    }
-    return query.join("&");
-  };
+  let query = [];
+  for (let key in params) {
+    let val = encodeURIComponent(key) + "=" + encodeURIComponent(params[key]);
+    query.push(val);
+  }
+  return query.join("&");
+};
+
+const fetchPostService = async (met, url, body, allow) => {
+ 
+
+  if (met === "get" && body !== undefined) {
+    let temp = encodeObject(body);
+    url = url + "?" + temp;
+
+   
+  } 
   
-  const fetchPostService = async (met, url, body, buildInArgs) => {
-    let jwtToken = "";
-    // if (sessionStorage.jwtToken !== undefined)
-    //   jwtToken = "Bearer " + sessionStorage.jwtToken;
+  let headers = allow?{
+    "Access-Control-Allow-Origin":"*"
+
+   }:{}
+
+  let response = await fetch(url,{
+    headers,
+    "method": met,
+    "Content-Type": "application/json",
+    "body":met!=="get"?JSON.stringify(body):undefined,
+    // mode: "cors",
+    referrerPolicy:allow?"strict-origin-when-cross-origin":"no-referrer-when-downgrade"
   
-    if (met === "get" && body !== undefined) {
-      let temp = encodeObject(body);
-      url = url + "?" + temp;
-  
-      if (sessionStorage.idInstitution)
-        url += "&idInstitution=" + sessionStorage.idInstitution;
-    } else if (sessionStorage.idInstitution)
-      url += "?idInstitution=" + sessionStorage.idInstitution;
-  
-      if(buildInArgs && buildInArgs.length > 0)
-        url += buildInArgs;
-  
-    return await fetch(url, {
-      method: met,
-      
-      headers: new Headers({
-        "Content-Type": "application/json",
-        // mode: 'cors',
-        // Authorization: jwtToken
-      }),
-      body: met === "get" ? undefined : JSON.stringify(body)
-    })
-      .then(async response => {
-        const contentType = response.headers.get("content-type");
-        if (contentType && contentType.indexOf("application/json") !== -1) {
-          return response.json();
-        } else return {};
-      })
-      .catch(error => Promise.reject(error));
-  };
-  
-  export default fetchPostService;
-  
+  }).then(response => response);
+
+  if (response.ok) {
+   
+    return response.json();
+  }
+ 
+};
+
+export default fetchPostService;

@@ -6,21 +6,22 @@ export const useOpenWeather = () => {
     const [OpenWeather, setOpenWeather] = useState([]);
     const [error, setError] = useState(); 
     // debugger;
+    console.log("OpenWeather: ",OpenWeather);
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await OpenWeatherCom(OpenWeather);
-                const { data, state } = response;
-                if (state) {
-                    setOpenWeather(data)
+           
+                if (response.current) {
+                    setOpenWeather(response)
                 }
-
+                
 
             } catch (error) {
                 setError(error)
             }
         }
-        OpenWeather.lat&&OpenWeather.long&&fetchData()
+        OpenWeather.lat&&OpenWeather.lon&&!OpenWeather.current&&fetchData()
     }, [OpenWeather])
 
     return {
