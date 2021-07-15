@@ -1,11 +1,13 @@
 
-import { fetchPostService } from "./fetchhandler"
+import fetchPostService from "./fetchhandler"
+import {REACT_APP_RESERVAMOS} from '@env'
 
 export async function ReservamosCom(body, path) {
+  debugger;
+  let data = { ...body }
+  let url = `${REACT_APP_RESERVAMOS}` 
 
-  data = { ...body }
-
-  return await fetchPostService("get", process.env.REACT_APP_RESERVAMOS+path, data)
+  return await fetchPostService("get", url + path, data)
     .then(result => result)
     .catch(error => error)
 }

@@ -5,7 +5,7 @@ export const useReservamosPlaces = () => {
 
     const [ReservamosPlaces, setReservamosPlaces] = useState([]);
     const [error, setError] = useState(); 
-
+    // debugger;
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -20,7 +20,7 @@ export const useReservamosPlaces = () => {
                 setError(error)
             }
         }
-        (ReservamosPlaces.length==0||ReservamosPlaces.q)&&fetchData()
+        (ReservamosPlaces.length==0)&&fetchData()
     }, [ReservamosPlaces])
 
     return {

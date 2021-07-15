@@ -1,12 +1,13 @@
 import React,{useEffect} from 'react';
 import {
-  FlatList,
-  TouchableOpacity
+  FlatList
 } from 'react-native';
-import {
-  View,
-  Text
-} from 'react-native-ui-lib';
+// import {
+//   View,
+//   Text,
+//   TouchableOpacity
+// } from 'react-native-ui-lib';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useOpenWeather } from '../hooks/useOpenWeather'
 import { useReservamosPlaces } from '../hooks/useReservamosPlaces'
 const Root = (props) => {
@@ -14,16 +15,18 @@ const Root = (props) => {
   const { ReservamosPlaces, setReservamosPlaces } = useReservamosPlaces()
   const [selectedId, setSelectedId] = React.useState(null)
   useEffect(() => {
-    setOpenWeather({ lat: selectedId.lat, long: selectedId.long })
+    if (selectedId&&selectedId.lat&&selectedId.long) {
+      setOpenWeather({ lat: selectedId.lat, long: selectedId.long })
     setReservamosPlaces({ q: selectedId.slug })
+    }
+    
   }, [selectedId])
-
 
   
   return (
     <div>
       <View bg-blue30 paddingV-30 marginV-1>
-        <Text text30>{json.stringify(OpenWeather)}</Text>
+        <Text text30>{JSON.stringify(OpenWeather)}</Text>
       </View>
       <View flex>
         <FlatList

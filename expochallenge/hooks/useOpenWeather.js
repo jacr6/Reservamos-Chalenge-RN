@@ -5,7 +5,7 @@ export const useOpenWeather = () => {
 
     const [OpenWeather, setOpenWeather] = useState([]);
     const [error, setError] = useState(); 
-
+    // debugger;
     useEffect(() => {
         const fetchData = async () => {
             try {
