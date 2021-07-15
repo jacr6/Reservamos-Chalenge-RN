@@ -17,6 +17,9 @@ const Root = (props) => {
     setOpenWeather({ lat: selectedId.lat, long: selectedId.long })
     setReservamosPlaces({ q: selectedId.slug })
   }, [selectedId])
+
+
+  
   return (
     <div>
       <View bg-blue30 paddingV-30 marginV-1>

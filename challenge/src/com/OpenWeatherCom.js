@@ -1,5 +1,5 @@
 
-import { fetchPostService } from "odc-commonsolidario"
+import { fetchPostService } from "./fetchhandler"
 
 export async function OpenWeatherCom(body) {
 
