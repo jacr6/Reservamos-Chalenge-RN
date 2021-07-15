@@ -33,8 +33,9 @@ const Root = (props) => {
     },
   });
 
+  let reg = ParsedPlace.find(place => place.id === selectedId);
  
-    if (OpenWeather&&OpenWeather.current) {
+    if (reg&&reg.lat&&OpenWeather&&OpenWeather.current&&(OpenWeather.lat-reg.lat)<0.0001) {
       alert(JSON.stringify(OpenWeather));
     }
  
